@@ -36,7 +36,7 @@
           @include('partials.product_table')
       </div>
           <div>
-              <b>Total Product Value: </b> ${{ $theTotalProductValue }}
+              <b  id="totalValue">Total Product Value: </b> ${{ $theTotalProductValue }}
           </div>
     </div>
     </div>
@@ -45,25 +45,36 @@
 
  @section('script')
    <script>
-      $(document).ready(function() {
-    // Submit form data via AJAX
-    $('#productForm').submit(function(e) {
-        e.preventDefault();
-        $.ajax({
+             $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $(document).ready(function () {
+       $('#productForm').submit(function (e) {
+         e.preventDefault
+         e.ajax({
             url: '/products',
-            type: 'POST',
-            data: $(this).serialize(),
-            success: function(response) {
-                $('#productList').load(location.href + ' #productList');
-                $('#totalValue').load(location.href + ' #totalValue');
-                $('#productForm')[0].reset();
+            type: 'post',
+            data: {
+                _token:'{{csrf_token()}}',
+                  feed: $(this).serialize() 
             },
-            error: function(xhr, status, error) {
+            success: function (response) {
+                $('#productList').load(location.href + ' #productList');
+
+                $('#totalValue').load(location.href + ' #totalValue');
+                 $('#productForm')[0].reset();
+            }, 
+            error: function(xhr, status, error)
+            {
                 console.error(xhr.responseText);
             }
-        });
+              
+         })
+       }) 
     });
-});
 
    </script>
  @endsection
