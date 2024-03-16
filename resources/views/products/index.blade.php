@@ -42,3 +42,28 @@
     </div>
  </div>
  @endsection
+
+ @section('script')
+   <script>
+      $(document).ready(function() {
+    // Submit form data via AJAX
+    $('#productForm').submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: '/products',
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                $('#productList').load(location.href + ' #productList');
+                $('#totalValue').load(location.href + ' #totalValue');
+                $('#productForm')[0].reset();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+});
+
+   </script>
+ @endsection
