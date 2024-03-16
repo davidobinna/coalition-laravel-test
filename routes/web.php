@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +17,19 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+}); */
+
+   Route::get('/', [ProductController::class, 'index'])->name('product.name');
+   Route::post('/products', [ProductController::class, 'store'])->name('product.store');
+   
+   Route::put('/products/{id}', [ProductController::class, 'update'])->name('product.update');
+
+  ///Product rOUTE Goes here
+
+
+
 
 Auth::routes();
 
