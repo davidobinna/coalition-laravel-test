@@ -10,7 +10,7 @@
     <div class="card-body">
 
 
-    <form action=""  id="productForm" >
+    <form  id="productForm" >
          @csrf
 
          <div  class="form-group">
@@ -53,22 +53,33 @@
 
     $(document).ready(function () {
        $('#productForm').submit(function (e) {
-         e.preventDefault
-         e.ajax({
+         e.preventDefault()
+         $.ajax({
             url: '/products',
             type: 'post',
-            data: {
-                _token:'{{csrf_token()}}',
-                  feed: $(this).serialize() 
-            },
+            data: $(this).serialize(),
             success: function (response) {
-                $('#productList').load(location.href + ' #productList');
+                   
+                 $('#productList tbody').prepend(
+                    '<tr>' +
+                            '<td>' +  response.name + '</td>' +
+                             '<td>' +  response.quantity +   '</td>' +
+                            '<td>' + response.price + '</td>' +
+                            '<td>' + response.created_at +  '</td>' +
+                            '<td>' +  (response.quantity * response.price)  +  '</td>' +
+                        '</tr>'
+                 );
 
-                $('#totalValue').load(location.href + ' #totalValue');
-                 $('#productForm')[0].reset();
+                 var totalValue = parseFloat($('#totalValue').text().replace('Total Value: $', ''));
+                     totalValue += ( response.quantity * response.price);
+                    $('#totalValue').text('Total Value: $'+ totalValue.toFixed(2));
+                   
+                   
+                    $('#productForm')[0].reset();
             }, 
             error: function(xhr, status, error)
             {
+                
                 console.error(xhr.responseText);
             }
               

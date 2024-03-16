@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -16,6 +18,9 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+       
+        //   return response()->json($request->all());
+         
            $product = new Product();
            $product->name     = $request->name;
            $product->quantity = $request->quantity;
@@ -24,7 +29,6 @@ class ProductController extends Controller
            $product->save();
 
            return response()->json($product);
-
 
     }
 
