@@ -1,12 +1,16 @@
 
+The link to the repo:
+https://github.com/davidobinna/coalition-laravel-test
 
-Please run this artisan command because i have used scalfolding:
+Run this artisan command because i have used bootstrap scalfolding:
 Composer install
 php artisan ui bootstrap --auth
 npm install
 npm run dev (pls run twice)
 
-I have Also included the coalation test for 
+Sql file is on the root folder
+
+ 
 
 
 
